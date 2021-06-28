@@ -1,0 +1,109 @@
+<script type="text/html" data-template-name="put value limit">
+  <div class="form-row">
+    <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+    <input type="text" id="node-input-name" placeholder="Name">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-value"><i class="fa fa-exclamation-triangle"></i> Value</label>
+    <select id="node-input-value">
+    </select>
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-min"><i class="fa fa-tag"></i> Min</label>
+    <input type="number" id="node-input-min" placeholder="Min">
+    <button type="button" class="red-ui-button red-ui-button-small copy-placeholder-to-value" title="Copy placeholder to value">&lt;</button>
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-max"><i class="fa fa-tag"></i> Max</label>
+    <input type="number" id="node-input-max" placeholder="Max">
+    <button type="button" class="red-ui-button red-ui-button-small copy-placeholder-to-value" title="Copy placeholder to value">&lt;</button>
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-field"><i class="fa fa-tag"></i> Field</label>
+    <input type="text" id="node-input-field" placeholder="Field">
+    <button type="button" class="red-ui-button red-ui-button-small copy-placeholder-to-value" title="Copy placeholder to value">&lt;</button>
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-throw"><i class="fa fa-tag"></i> Throw</label>
+    <input type="text" id="node-input-throw" placeholder="Throw">
+    <button type="button" class="red-ui-button red-ui-button-small copy-placeholder-to-value" title="Copy placeholder to value">&lt;</button>
+  </div>
+</script>
+
+
+<script type="text/javascript">
+  RED.nodes.registerType('put value limit', {
+    category: 'PUT NG',
+    defaults: {
+      name: {value: ''},
+      value: {value: '', required: true},
+      min: {value: ''},
+      max: {value: ''},
+      field: {value: ''},
+      throw: {value: ''},
+    },
+    color: '#debd5c',
+    inputs: 1,
+    outputs: 2,
+    icon: 'font-awesome/fa-hand-lizard-o',
+    align: 'left',
+    label: function() {
+      if(this.name) return this.name;
+      if(this.value){
+        var putValueLimits = RED.settings.putValueLimits || {};
+        return putValueLimits[this.value] ? this.value + ' (' + (this.field || putValueLimits[this.value].field) + ')' : 'Invalid value selected';
+
+      }else{
+        return 'put value limit';
+
+      }
+
+    },
+    labelStyle: function() {
+      return this.name ? 'node_label_italic' : '';
+
+    },
+    outputLabels: ['out of limits', 'OK'],
+    oneditprepare: function() {
+      var putValueLimits = RED.settings.putValueLimits || {};
+      var $select = $('#node-input-value');
+      $select.html('');
+      for (var each in putValueLimits) {
+        if (putValueLimits.hasOwnProperty(each)) {
+          $('<option>').attr('value', each).text(each+' ('+putValueLimits[each].min+' < x < '+putValueLimits[each].max+')').appendTo($select);
+        }
+      }
+      $select.val(this.value);
+      $select.change(function(ev){
+        var $this = $(this);
+        var value = $this.val();
+        var putValueLimits = RED.settings.putValueLimits || {};
+
+        if(value && putValueLimits[value]){
+          $('#node-input-field').prop('placeholder', putValueLimits[value].field || 'Field');
+          $('#node-input-min').prop('placeholder', putValueLimits[value].min || 'Min');
+          $('#node-input-max').prop('placeholder', putValueLimits[value].max || 'Max');
+          $('#node-input-throw').prop('placeholder', putValueLimits[value].throw || 'Throw');
+
+        }
+
+      });
+
+      $('.copy-placeholder-to-value').click(function(ev){
+        var $input = $(this).siblings('input');
+        $input.val($input.attr('placeholder'));
+
+      });
+    },
+  });
+</script>
+
+
+<script type="text/html" data-help-name="put value limit">
+  <p>Node that appends selected value to <code>msg</code>.</p>
+</script>

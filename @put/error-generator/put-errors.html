@@ -1,0 +1,64 @@
+<script type="text/javascript">
+  RED.nodes.registerType('put-errors', {
+    category: 'PUT NG',
+    color: '#ffaaaa',
+    defaults: {
+      name: {value: ''},
+      error: {value: '', required: true},
+      fieldCode: {value: 'err_code'},
+      fieldMessage: {value: 'err_msg'},
+    },
+    inputs: 1,
+    outputs: 1,
+    icon: 'font-awesome/fa-exclamation-triangle',
+    label: function() {
+      if(this.name) return this.name;
+      if(this.error){
+        var putErrors = RED.settings.putErrors || {};
+        return putErrors[this.error] ? `E${this.error}: ${putErrors[this.error]}` : 'Invalid error selected';
+      }else{
+        return 'put-errors';
+      }
+    },
+    inputLabels: 'trigger',
+    outputLabels: 'output',
+    oneditprepare: function() {
+      var putErrors = RED.settings.putErrors || {};
+      var $select = $('#node-input-error');
+      $select.html('');
+      for (var each in putErrors) {
+        if (putErrors.hasOwnProperty(each)) {
+          $('<option>').attr('value', each).text(putErrors[each]).appendTo($select);
+        }
+      }
+      $select.val(this.error);
+    },
+  });
+</script>
+
+<script type="text/html" data-template-name="put-errors">
+  <div class="form-row">
+    <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+    <input type="text" id="node-input-name" placeholder="Name">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-error"><i class="fa fa-exclamation-triangle"></i> Error</label>
+    <select id="node-input-error">
+    </select>
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-fieldCode"><i class="fa fa-tag"></i> Code field</label>
+    <input type="text" id="node-input-fieldCode" placeholder="Code field">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-fieldMessage"><i class="fa fa-tag"></i> Message field</label>
+    <input type="text" id="node-input-fieldMessage" placeholder="Message field">
+  </div>
+</script>
+
+<script type="text/html" data-help-name="put-errors">
+  <p>Node that appends selected error to <code>msg</code>.</p>
+</script>

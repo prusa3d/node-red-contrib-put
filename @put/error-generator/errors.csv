@@ -1,0 +1,4 @@
+err_code,err_msg
+00001,Unspecified error
+
+30001,Lid open during testing

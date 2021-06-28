@@ -1,0 +1,39 @@
+<script type="text/html" data-template-name="put mqtt debug">
+  <div class="form-row">
+    <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+    <input type="text" id="node-input-name" placeholder="Name">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-topic"><i class="fa fa-cogs"></i> Topic</label>
+    <input type="text" id="node-input-topic" placeholder="Topic override">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-retain"><i class="fa fa-cogs"></i> Retain</label>
+    <input type="checkbox" id="node-input-retain" placeholder="Retain">
+  </div>
+</script>
+
+<script type="text/javascript">
+  RED.nodes.registerType('put mqtt debug', {
+    category: 'PUT NG',
+    defaults: {
+      name: { value: '' },
+      topic: { value: '' },
+      retain: { value: false },
+    },
+    color: '#d8bfd8',
+    inputs: 1,
+    outputs: 2,
+    icon: 'bridge.svg',
+    align: 'left',
+    label: function() {
+      return this.name || this.topic || 'mqtt debug';
+    },
+    labelStyle: function() {
+      return this.name ? 'node_label_italic' : '';
+    },
+    outputLabels: ['fail', 'success'],
+  });
+</script>

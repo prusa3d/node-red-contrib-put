@@ -1,0 +1,70 @@
+<script type="text/html" data-template-name="put arduino">
+  <div class="form-row">
+    <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+    <input type="text" id="node-input-name" placeholder="Name">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-tester_id"><i class="fa fa-cog"></i> Tester ID</label>
+    <input type="number" id="node-input-tester_id" placeholder="Tester ID" min="0" max="999">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-store_qr"><i class="fa fa-cloud-download"></i> Store QR to global</label>
+    <input type="checkbox" id="node-input-store_qr" placeholder="Store QR to global">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-bsel"><i class="fa fa-microchip"></i> PUT Board</label>
+    <select id="node-input-bsel">
+      <option value="FE">MMU2</option>
+      <option value="FD">SLC06</option>
+      <option value="FC">Buddy</option>
+      <option value="FB">LoveBoard</option>
+      <option value="FA">FAN</option>
+      <option value="F9">XBuddy</option>
+      <option value="F8">SELF</option>
+      <option value="F7">Inda</option>
+      <option value="F6">FSENSOR</option>
+      <option value="F5">HE</option>
+      <option value="F4">SL1S_LCD_TRANS</option>
+      <option value="F3">SL1S_LED_BOOST</option>
+    </select>
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-hw_rev"><i class="fa fa-cloud"></i> HW Revision</label>
+    <input type="number" id="node-input-hw_rev" placeholder="HW Revision" min="0" max="999">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-fw_version"><i class="fa fa-cloud"></i> FW Version</label>
+    <input type="number" id="node-input-fw_version" placeholder="FW Version" min="0" max="999">
+  </div>
+</script>
+
+<script type="text/javascript">
+  RED.nodes.registerType('put arduino', {
+    category: 'PUT NG',
+    defaults: {
+      name: { value: '' },
+      tester_id: { value: '', required: true },
+      store_qr: { value: true },
+      bsel: { value: '', required: true },
+      hw_rev: { value: '', required: true },
+      fw_version: { value: '', required: true },
+    },
+    color: '#c7e9c0',
+    inputs: 0,
+    outputs: 8,
+    icon: 'font-awesome/fa-microchip',
+    align: 'left',
+    label: function() {
+      return this.name || 'Arduino';
+    },
+    labelStyle: function() {
+      return this.name ? 'node_label_italic' : '';
+    },
+    outputLabels: ['Arduino ready', 'Reset flow', 'QR code', 'ENC btn', 'USR btn', 'RST btn', 'Lid watchdog', 'Arduino output'],
+  });
+</script>

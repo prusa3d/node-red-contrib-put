@@ -1,0 +1,62 @@
+<script type="text/html" data-template-name="put lid watchdog">
+  <div class="form-row">
+    <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+    <input type="text" id="node-input-name" placeholder="Name">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-enabled"><i class="fa fa-flash"></i> Enabled</label>
+    <input type="checkbox" id="node-input-enabled" placeholder="Enabled">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-lid"><i class="fa fa-cog"></i> Lid</label>
+    <select id="node-input-lid">
+      <option value="0">LID 0</option>
+      <option value="1">LID 1</option>
+    </select>
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-state"><i class="fa fa-cog"></i> Wanted state</label>
+    <select id="node-input-state">
+      <option value="0">Open</option>
+      <option value="1">Closed</option>
+    </select>
+  </div>
+</script>
+
+<script type="text/javascript">
+  RED.nodes.registerType('put lid watchdog', {
+    category: 'PUT NG',
+    defaults: {
+      name: { value: '' },
+      enabled: { value: false },
+      lid: { value: '', required: true },
+      state: { value: '' },
+    },
+    color: '#e9967a',
+    inputs: 1,
+    outputs: 2,
+    icon: 'font-awesome/fa-window-maximize',
+    align: 'left',
+    label: function() {
+      if(this.name) return this.name;
+      if(this.lid && this.state){
+        if(this.enabled){
+          return 'ENABLE LID' + this.lid + ' WATCHDOG (' + (this.state == '1' ? 'closed' : 'open') + ')';
+
+        }else{
+          return 'DISABLE LID' + this.lid + ' WATCHDOG';
+
+        }
+
+      }
+      return 'lid watchdog';
+    },
+    labelStyle: function() {
+      return this.name ? 'node_label_italic' : '';
+    },
+    outputLabels: ['fail', 'success'],
+  });
+</script>

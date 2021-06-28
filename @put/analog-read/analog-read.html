@@ -1,0 +1,74 @@
+<script type="text/html" data-template-name="put analog read">
+  <div class="form-row">
+    <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+    <input type="text" id="node-input-name" placeholder="Name">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-channel"><i class="fa fa-cog"></i> Channel</label>
+    <select id="node-input-channel">
+      <optgroup label="get_hall_current">
+        <option value="I24A">I24A</option>
+        <option value="I24A_reference">I24A (reference)</option>
+        <option value="I24B">I24B</option>
+        <option value="I24B_reference">I24B (reference)</option>
+        <option value="I24_LOAD">I24_LOAD</option>
+        <option value="I24_LOAD_reference">I24_LOAD (reference)</option>
+      </optgroup>
+      <optgroup label="get_zx_current">
+        <option value="I5A">I5A</option>
+        <option value="I5B">I5B</option>
+        <option value="I3">I3</option>
+        <option value="I5_LOAD">I24_LOAD</option>
+      </optgroup>
+      <optgroup label="read_val">
+        <option value="24VA_SNS">24VA_SNS</option>
+        <option value="24VB_SNS">24VB_SNS</option>
+        <option value="24VLD_SNS">24VLD_SNS</option>
+        <option value="I24A_AD">I24A_AD</option>
+        <option value="I24B_AD">I24B_AD</option>
+        <option value="24V_PWR_AD">24V_PWR_AD</option>
+        <option value="5VA_SNS">5VA_SNS</option>
+        <option value="5VB_SNS">5VB_SNS</option>
+        <option value="5VLD_SNS">5VLD_SNS</option>
+        <option value="5V_PWR_AD">5V_PWR_AD</option>
+        <option value="I5A_AD">I5A_AD</option>
+        <option value="I5B_AD">I5B_AD</option>
+        <option value="3V3A_SNS">3V3A_SNS</option>
+        <option value="I3_AD">I3_AD</option>
+        <option value="CHE0">CHE0</option>
+        <option value="CHE1">CHE1</option>
+      </optgroup>
+    </select>
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-multiplier"><i class="fa fa-refresh"></i> Multiplier</label>
+    <input type="number" id="node-input-multiplier" placeholder="Multiplier">
+  </div>
+</script>
+
+<script type="text/javascript">
+  RED.nodes.registerType('put analog read', {
+    category: 'PUT NG',
+    defaults: {
+      name: { value: '' },
+      channel: { value: '', required: true },
+      multiplier: { value: 1.0 },
+    },
+    color: '#87a980',
+    inputs: 1,
+    outputs: 2,
+    icon: 'font-awesome/fa-signal',
+    align: 'left',
+    label: function() {
+      if(this.name) return this.name;
+      if(this.channel) return this.channel + (this.multiplier != 1.0 ? ' ('+this.multiplier+'x)' : '');
+      return 'analog read';
+    },
+    labelStyle: function() {
+      return this.name ? 'node_label_italic' : '';
+    },
+    outputLabels: ['fail', 'success'],
+  });
+</script>

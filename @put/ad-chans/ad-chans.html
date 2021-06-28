@@ -1,0 +1,61 @@
+<script type="text/html" data-template-name="put ad chans">
+  <div class="form-row">
+    <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+    <input type="text" id="node-input-name" placeholder="Name">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-chna"><i class="fa fa-exchange"></i> Channel A</label>
+    <input type="number" id="node-input-chna" placeholder="Channel A" min="0" max="4">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-chnb"><i class="fa fa-exchange"></i> Channel B</label>
+    <input type="number" id="node-input-chnb" placeholder="Channel B" min="0" max="3">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-chnc"><i class="fa fa-exchange"></i> Channel C</label>
+    <input type="number" id="node-input-chnc" placeholder="Channel C" min="0" max="3">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-chnd"><i class="fa fa-exchange"></i> Channel D</label>
+    <input type="number" id="node-input-chnd" placeholder="Channel D" min="0" max="4">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-readings"><i class="fa fa-refresh"></i> Readings</label>
+    <input type="number" id="node-input-readings" placeholder="Readings" min="1" max="128">
+  </div>
+</script>
+
+<script type="text/javascript">
+  RED.nodes.registerType('put ad chans', {
+    category: 'PUT NG',
+    defaults: {
+      name: { value: '' },
+      chna: { value: 0 },
+      chnb: { value: 0 },
+      chnc: { value: 0 },
+      chnd: { value: 0 },
+      readings: { value: 16 },
+    },
+    color: '#e7e7ae',
+    inputs: 1,
+    outputs: 2,
+    icon: 'font-awesome/fa-signal',
+    align: 'left',
+    label: function() {
+      var same = [this.chna, this.chnb, this.chnc, this.chnd].every(function(e, _, arr){return e === arr[0];});
+      var chan_str = same ? String(this.chna) : [this.chna, this.chnb, this.chnc, this.chnd].join(', ');
+      if(this.readings != 16) chan_str += ', x' + this.readings;
+
+      return this.name || ('ad chans (' + chan_str + ')');
+    },
+    labelStyle: function() {
+      return this.name ? 'node_label_italic' : '';
+    },
+    outputLabels: ['fail', 'success'],
+  });
+</script>

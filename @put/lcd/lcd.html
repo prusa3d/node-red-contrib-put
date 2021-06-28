@@ -1,0 +1,51 @@
+<script type="text/html" data-template-name="put lcd">
+  <div class="form-row">
+    <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+    <input type="text" id="node-input-name" placeholder="Name">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-text"><i class="fa fa-comment"></i> Text</label>
+    <input type="text" id="node-input-text" placeholder="Text" maxlength="20">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-pos_x"><i class="fa fa-angle-double-right"></i> X</label>
+    <input type="number" id="node-input-pos_x" placeholder="X" min="0" max="19">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-pos_y"><i class="fa fa-angle-double-down"></i> Y</label>
+    <input type="number" id="node-input-pos_y" placeholder="Y" min="0" max="3">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-clear"><i class="fa fa-times-circle"></i> Clear display</label>
+    <input type="checkbox" id="node-input-clear" placeholder="Clear display">
+  </div>
+</script>
+
+<script type="text/javascript">
+  RED.nodes.registerType('put lcd', {
+    category: 'PUT NG',
+    defaults: {
+      name: { value: '' },
+      text: { value: '' },
+      pos_x: { value: 0 },
+      pos_y: { value: 0 },
+      clear: { value: false },
+    },
+    color: '#c0deed',
+    inputs: 1,
+    outputs: 2,
+    icon: 'font-awesome/fa-comment',
+    align: 'left',
+    label: function() {
+      return this.name || this.text || 'LCD';
+    },
+    labelStyle: function() {
+      return this.name ? 'node_label_italic' : '';
+    },
+    outputLabels: ['fail', 'success'],
+  });
+</script>

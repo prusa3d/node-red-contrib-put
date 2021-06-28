@@ -1,0 +1,57 @@
+<script type="text/html" data-template-name="put power control">
+  <div class="form-row">
+    <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+    <input type="text" id="node-input-name" placeholder="Name">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-port"><i class="fa fa-cog"></i> Port</label>
+    <select id="node-input-port">
+      <option value="U24VBON">U24VBON</option>
+      <option value="U24VBSOFT">U24VBSOFT</option>
+      <option value="U5VBON">U5VBON</option>
+      <option value="U5VBSOFT">U5VBSOFT</option>
+      <option value="U3V3ON">U3V3ON</option>
+      <option value="U3V3SOFT">U3V3SOFT</option>
+      <option value="_uexton">VAPP_ON (_uexton)</option>
+      <option value="sol0">SOL0</option>
+      <option value="sol1">SOL1</option>
+      <option value="sol2">SOL2</option>
+      <option value="sol3">SOL3</option>
+      <option value="sol4">SOL4</option>
+      <option value="sol5">SOL5</option>
+      <option value="sol6">SOL6</option>
+      <option value="sol7">SOL7</option>
+    </select>
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-state"><i class="fa fa-flash"></i> State</label>
+    <input type="checkbox" id="node-input-state" placeholder="State">
+  </div>
+</script>
+
+<script type="text/javascript">
+  RED.nodes.registerType('put power control', {
+    category: 'PUT NG',
+    defaults: {
+      name: { value: '' },
+      port: { value: '', required: true },
+      state: { value: false },
+    },
+    color: '#fdd0a2',
+    inputs: 1,
+    outputs: 2,
+    icon: 'font-awesome/fa-flash',
+    align: 'left',
+    label: function() {
+      if(this.name) return this.name;
+      if(this.port) return this.port.toUpperCase() + (this.state ? ' ON' : ' OFF');
+      return 'power control';
+    },
+    labelStyle: function() {
+      return this.name ? 'node_label_italic' : '';
+    },
+    outputLabels: ['fail', 'success'],
+  });
+</script>

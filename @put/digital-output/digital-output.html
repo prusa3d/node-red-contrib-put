@@ -1,0 +1,72 @@
+<script type="text/html" data-template-name="put digital output">
+  <div class="form-row">
+    <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+    <input type="text" id="node-input-name" placeholder="Name">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-channel"><i class="fa fa-cog"></i> Channel</label>
+    <select id="node-input-channel">
+      <option value="a">DIA</option>
+      <option value="b">DIB</option>
+      <option value="c">DIC</option>
+    </select>
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-port"><i class="fa fa-microchip"></i> Port</label>
+    <select id="node-input-port">
+      <optgroup label="Pull-down">
+        <option value="pdn0">Pull-down 0</option>
+        <option value="pdn1">Pull-down 1</option>
+        <option value="pdn2">Pull-down 2</option>
+        <option value="pdn3">Pull-down 3</option>
+        <option value="pdn4">Pull-down 4</option>
+        <option value="pdn5">Pull-down 5</option>
+        <option value="pdn6">Pull-down 6</option>
+        <option value="pdn7">Pull-down 7</option>
+      </optgroup>
+      <optgroup label="Pull-up">
+        <option value="pup0">Pull-up 0</option>
+        <option value="pup1">Pull-up 1</option>
+        <option value="pup2">Pull-up 2</option>
+        <option value="pup3">Pull-up 3</option>
+        <option value="pup4">Pull-up 4</option>
+        <option value="pup5">Pull-up 5</option>
+        <option value="pup6">Pull-up 6</option>
+        <option value="pup7">Pull-up 7</option>
+      </optgroup>
+    </select>
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-state"><i class="fa fa-flash"></i> State</label>
+    <input type="checkbox" id="node-input-state" placeholder="State">
+  </div>
+</script>
+
+<script type="text/javascript">
+  RED.nodes.registerType('put digital output', {
+    category: 'PUT NG',
+    defaults: {
+      name: { value: '' },
+      channel: { value: '', required: true },
+      port: { value: '', required: true },
+      state: { value: false },
+    },
+    color: '#d8bfd8',
+    inputs: 1,
+    outputs: 2,
+    icon: 'font-awesome/fa-flash',
+    align: 'left',
+    label: function() {
+      if(this.name) return this.name;
+      if(this.channel && this.port) return this.channel.toUpperCase() + ':' + this.port.toUpperCase() + (this.state ? ' ON' : ' OFF');
+      return 'digital output';
+    },
+    labelStyle: function() {
+      return this.name ? 'node_label_italic' : '';
+    },
+    outputLabels: ['fail', 'success'],
+  });
+</script>

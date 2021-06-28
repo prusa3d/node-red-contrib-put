@@ -1,0 +1,46 @@
+<script type="text/html" data-template-name="put status led">
+  <div class="form-row">
+    <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+    <input type="text" id="node-input-name" placeholder="Name">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-led"><i class="fa fa-cog"></i> LED</label>
+    <select id="node-input-led">
+      <option value="lok">OK</option>
+      <option value="lerr">ERROR</option>
+      <option value="lusr">USR</option>
+      <option value="all">ALL</option>
+    </select>
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-state"><i class="fa fa-flash"></i> State</label>
+    <input type="checkbox" id="node-input-state" placeholder="State">
+  </div>
+</script>
+
+<script type="text/javascript">
+  RED.nodes.registerType('put status led', {
+    category: 'PUT NG',
+    defaults: {
+      name: { value: '' },
+      led: { value: '', required: true },
+      state: { value: false },
+    },
+    color: '#ffcc66',
+    inputs: 1,
+    outputs: 2,
+    icon: 'font-awesome/fa-lightbulb-o',
+    align: 'left',
+    label: function() {
+      if(this.name) return this.name;
+      if(this.led) return this.led.toUpperCase() + (this.state ? ' ON' : ' OFF');
+      return 'status led';
+    },
+    labelStyle: function() {
+      return this.name ? 'node_label_italic' : '';
+    },
+    outputLabels: ['fail', 'success'],
+  });
+</script>

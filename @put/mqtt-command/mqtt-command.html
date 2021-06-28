@@ -1,0 +1,33 @@
+<script type="text/html" data-template-name="put mqtt command">
+  <div class="form-row">
+    <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+    <input type="text" id="node-input-name" placeholder="Name">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-command"><i class="fa fa-cogs"></i> Command</label>
+    <input type="text" id="node-input-command" placeholder="Command">
+  </div>
+</script>
+
+<script type="text/javascript">
+  RED.nodes.registerType('put mqtt command', {
+    category: 'PUT NG',
+    defaults: {
+      name: { value: '' },
+      command: { value: '', required: true },
+    },
+    color: '#d8bfd8',
+    inputs: 1,
+    outputs: 2,
+    icon: 'bridge.svg',
+    align: 'left',
+    label: function() {
+      return this.name || this.command || 'mqtt command';
+    },
+    labelStyle: function() {
+      return this.name ? 'node_label_italic' : '';
+    },
+    outputLabels: ['fail', 'success'],
+  });
+</script>

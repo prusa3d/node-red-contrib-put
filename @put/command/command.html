@@ -1,0 +1,69 @@
+<script type="text/html" data-template-name="put command">
+  <div class="form-row">
+    <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+    <input type="text" id="node-input-name" placeholder="Name">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-command"><i class="fa fa-cog"></i> Command</label>
+    <input type="text" id="node-input-command" placeholder="Command">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-reply_ok"><i class="fa fa-check-circle"></i> OK reply</label>
+    <input type="text" id="node-input-reply_ok" placeholder="OK reply">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-reply_check"><i class="fa fa-check-square-o"></i> Check reply</label>
+    <input type="checkbox" id="node-input-reply_check" placeholder="Check reply">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-error_msg"><i class="fa fa-check-square-o"></i> Error msg</label>
+    <input type="text" id="node-input-error_msg" placeholder="Error msg">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-retries"><i class="fa fa-refresh"></i> Retries</label>
+    <input type="number" id="node-input-retries" placeholder="Retries">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-retry_delay"><i class="fa fa-clock-o"></i> Retry delay</label>
+    <input type="number" id="node-input-retry_delay" placeholder="Retry delay">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-throw"><i class="fa fa-exclamation-triangle"></i> Throw</label>
+    <input type="checkbox" id="node-input-throw" placeholder="Throw">
+  </div>
+</script>
+
+<script type="text/javascript">
+  RED.nodes.registerType('put command', {
+    category: 'PUT NG',
+    defaults: {
+      name: { value: '' },
+      command: { value: '' },
+      reply_ok: { value: 'OK;' },
+      reply_check: { value: true },
+      error_msg: { value: '' },
+      retries: { value: 2 },
+      retry_delay: { value: 100 },
+      throw: { value: true },
+    },
+    color: '#e7e7ae',
+    inputs: 1,
+    outputs: 2,
+    icon: 'font-awesome/fa-cogs',
+    align: 'left',
+    label: function() {
+      return this.name || (this.command || 'command');
+    },
+    labelStyle: function() {
+      return this.name ? 'node_label_italic' : '';
+    },
+    outputLabels: ['fail', 'success'],
+  });
+</script>
